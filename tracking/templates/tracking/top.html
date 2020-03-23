@@ -1,0 +1,16 @@
+{% extends "tracking/base.html" %}
+{%block title%}top{%endblock%}
+{%block top_title%}Top page{%endblock%}
+{%block content%}
+
+<form action="" method="POST">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <a href="{%url 'tracking:login'%}" class='btn btn-success'>ログインしてね！</a> 
+                <a href="{%url 'tracking:user_create'%}" class='btn btn-primary'>新規登録はこちら</a> 
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock%}
