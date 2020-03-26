@@ -31,35 +31,45 @@ class Only_own_mixin(UserPassesTestMixin, LoginRequiredMixin):  # ログイン�
 
 def tracking_ship(request):
     track_number = request.GET.get('track_number')
-    if 9 < len(track_number) < 20:  # 10桁以上20桁未満で通す
-        track_number = jaconv.z2h(
-            track_number, digit=True, ascii=True)  # 全角を半角に
-        track_number = re.sub("\\D", "", track_number)  # 数字以外を消す
-        texts = scraping(track_number)  # 追跡番号検索
-        data_dict = {}  # データ用
-        target_td_num = {}  # データ数
-        data = {'track_number': str(track_number)}
-        for t in target:  # 一度取得データをdictで整形
-            data_dict.update([(t, texts[t])])
-        target_dict = {  # ターゲット一覧
-            target[0]: "日本郵政",
-            target[1]: "佐川急便",
-            target[2]: "クロネコヤマト",
-            target[3]: "西濃運輸",
-            target[4]: "日本通運",
-            target[5]: "福山通運",
-        }
-        for i in range(len(target)):
-            target_td_num.update([(
-                target[i], int((len(data_dict[target[i]]))/2)
-            )])
+    try:
+        if 9 < len(track_number) < 20:  # 10桁以上20桁未満で通す
+            track_number = jaconv.z2h(
+                track_number, digit=True, ascii=True)  # 全角を半角に
+            track_number = re.sub("\\D", "", track_number)  # 数字以外を消す
+            texts = scraping(track_number)  # 追跡番号検索
+            data_dict = {}  # データ用
+            data = {'track_number': str(track_number)}
+            for t in target:  # 一度取得データをdictで整形
+                data_dict.update([(t, texts[t])])
+            target_dict = {  # ターゲット一覧
+                target[0]: "日本郵政",
+                target[1]: "佐川急便",
+                target[2]: "クロネコヤマト",
+                target[3]: "西濃運輸",
+                target[4]: "日本通運",
+                target[5]: "福山通運",
+            }
+            target_td_num = {
+                target[0]: 6,
+                target[1]: 8,
+                target[2]: 6,
+                target[3]: 3,
+                target[4]: 5,
+                target[5]: 2,
+            }
+            # for i in range(len(target)):
+            #   target_td_num.update([(
+            #        target[i], int((len(data_dict[target[i]]))/2)
+            #    )])
 
-        data.update([('data', data_dict)])  # 扱いやすい様辞書の入れ子にする
-        data.update([('targets', target_dict)])  # ターゲット一覧
-        data.update([('td_num', target_td_num)])  # ターゲットのtd数
-        # print(data)
-        return render(request, 'tracking/search.html', data)
-    else:
+            data.update([('data', data_dict)])  # 扱いやすい様辞書の入れ子にする
+            data.update([('targets', target_dict)])  # ターゲット一覧
+            data.update([('td_num', target_td_num)])  # ターゲットのtd数
+            # print(data)
+            return render(request, 'tracking/search.html', data)
+        else:
+            return render(request, 'tracking/search.html')
+    except:
         return render(request, 'tracking/search.html')
 
 

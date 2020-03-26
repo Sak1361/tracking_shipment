@@ -1,6 +1,7 @@
 {% extends "tracking/base.html" %}
 {% load lookup %}   <!--変数を引数にする-->
 {% load surplus%}   <!--余剰算-->
+{% load sub%}   <!--減算-->
 
 {% block content %}
 
@@ -76,7 +77,6 @@
                                         <td>{{ d }}</td>
                                         </tr>   <!--題を閉める-->
                                         <tr> <!--新しいテーブル-->
-                                    
                                     {%else%}
                                         <td><strong>{{ d }}</strong></td>
                                     {%endif%}
