@@ -1,5 +1,5 @@
 """
-WSGI config for tracing_shipment project.
+WSGI config for tracking_shipment project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracing_shipment.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracking_shipment.settings')
 
 application = get_wsgi_application()

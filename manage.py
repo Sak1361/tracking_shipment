@@ -5,7 +5,8 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracing_shipment.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'tracking_shipment.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
